@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日産 中古車比較（ローン情報付き）</title>
+    <style>
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .car-comparison {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        .car-card {
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 25px;
+            width: 420px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .car-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1a1a1a;
+        }
+        .car-color {
+            text-align: center;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .car-image {
+            width: 100%;
+            height: 220px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #16396f;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .info-section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        .info-label {
+            width: 120px;
+            color: #555;
+            font-weight: 600;
+        }
+        .info-value {
+            flex: 1;
+            color: #333;
+        }
+        .price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .feature-item {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 12px;
+        }
+        .feature-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            background-color: #3498db;
+            border-radius: 50%;
+        }
+        .loan-section {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .loan-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #16396f;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .loan-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .loan-label {
+            width: 140px;
+            color: #555;
+        }
+        .loan-value {
+            flex: 1;
+            color: #333;
+            font-weight: bold;
+        }
+        .monthly-payment {
+            color: #e67e22;
+            font-size: 18px;
+        }
+        .total-interest {
+            color: #8e44ad;
+        }
+        .detail-button {
+            display: block;
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 14px 0;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 25px;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+        .detail-button:hover {
+            background-color: #2980b9;
+        }
+        @media (max-width: 1400px) {
+            .car-comparison {
+                justify-content: center;
+            }
+            .car-card {
+                width: 450px;
+            }
+        }
+        @media (max-width: 768px) {
+            .car-card {
+                width: 100%;
+                padding: 20px;
+            }
+            .info-row, .loan-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .info-label, .loan-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .info-value, .loan-value {
+                width: 100%;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .tag {
+            background-color: #edf2f7;
+            color: #2c5282;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>日産 中古車比較（ローン情報付き）</h1>
+        <div class="car-comparison">
+            <!-- 車両1 - ラフェスタ ブラック -->
+            <div class="car-card">
+                <div class="car-title">ラフェスタ ハイウェイスターG</div>
+                <div class="car-color">スパークリングブラック（P）</div>
+                <div class="car-image">
+                    <img src="https://img.nextage.jp/stock_images/4523829/4523829_mdl_9c8de001.jpg" alt="ラフェスタ ハイウェイスターG ブラック">
+                </div>
+                
+                <div class="section-title">基本情報</div>
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-label">支払総額:</div>
+                        <div class="info-value price">54.9万円</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">車両価格:</div>
+                        <div class="info-value">39.8万円</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">年式:</div>
+                        <div class="info-value">2012年（H24）</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">走行距離:</div>
+                        <div class="info-value">6.5万Km</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">車検:</div>
+                        <div class="info-value">車検整備付</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">修復歴:</div>
+                        <div class="info-value">無し</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">取扱店舗:</div>
+                        <div class="info-value">岐阜２１号バイパス店</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">ローン情報（金利6%）</div>
+                <div class="loan-section">
+                    <div class="loan-row">
+                        <div class="loan-label">月々の支払額:</div>
+                        <div class="loan-value monthly-payment">10,614円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">支払総額:</div>
+                        <div class="loan-value">636,822円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">総支払利息:</div>
+                        <div class="loan-value total-interest">87,822円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">支払回数:</div>
+                        <div class="loan-value">60回（5年間）</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">仕様</div>
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-label">排気量:</div>
+                        <div class="info-value">2000cc</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">燃料:</div>
+                        <div class="info-value">無鉛レギュラーガソリン</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">シフト:</div>
+                        <div class="info-value">5AT</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">駆動方式:</div>
+                        <div class="info-value">FF</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">主要装備</div>
+                <div class="info-section">
+                    <div class="tags">
+                        <span class="tag">禁煙車</span>
+                        <span class="tag">パワースライドドア（片側）</span>
+                        <span class="tag">純正ナビ</span>
+                        <span class="tag">フルセグ</span>
+                        <span class="tag">DVD/CD</span>
+                        <span class="tag">Bluetooth</span>
+                        <span class="tag">ETC</span>
+                        <span class="tag">スマートキー</span>
+                        <span class="tag">バックカメラ</span>
+                    </div>
+                </div>
+                
+                <a href="#" class="detail-button">詳細はこちら</a>
+            </div>
+            
+            <!-- 車両2 - ラフェスタ ホワイト -->
+            <div class="car-card">
+                <div class="car-title">ラフェスタ ハイウェイスターG</div>
+                <div class="car-color">クリスタルパールホワイト（P）</div>
+                <div class="car-image">
+                    <img src="https://img.nextage.jp/stock_images/4539977/4539977_lst_5993fb0a.jpg" alt="ラフェスタ ハイウェイスターG ホワイト">
+                </div>
+                
+                <div class="section-title">基本情報</div>
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-label">支払総額:</div>
+                        <div class="info-value price">84.9万円</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">車両価格:</div>
+                        <div class="info-value">75.8万円</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">年式:</div>
+                        <div class="info-value">2016年（H28）</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">走行距離:</div>
+                        <div class="info-value">8.6万Km</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">車検:</div>
+                        <div class="info-value">2025年06月</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">修復歴:</div>
+                        <div class="info-value">無し</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">取扱店舗:</div>
+                        <div class="info-value">函館北斗店</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">ローン情報（金利6%）</div>
+                <div class="loan-section">
+                    <div class="loan-row">
+                        <div class="loan-label">月々の支払額:</div>
+                        <div class="loan-value monthly-payment">16,414円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">支払総額:</div>
+                        <div class="loan-value">984,813円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">総支払利息:</div>
+                        <div class="loan-value total-interest">135,813円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">支払回数:</div>
+                        <div class="loan-value">60回（5年間）</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">仕様</div>
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-label">排気量:</div>
+                        <div class="info-value">2000cc</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">燃料:</div>
+                        <div class="info-value">無鉛レギュラーガソリン</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">シフト:</div>
+                        <div class="info-value">4AT</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">駆動方式:</div>
+                        <div class="info-value">FULL4WD</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">主要装備</div>
+                <div class="info-section">
+                    <div class="tags">
+                        <span class="tag">4WD</span>
+                        <span class="tag">両側電動スライドドア</span>
+                        <span class="tag">純正ナビ</span>
+                        <span class="tag">フルセグ</span>
+                        <span class="tag">DVD/CD</span>
+                        <span class="tag">Bluetooth</span>
+                        <span class="tag">フリップダウンモニター</span>
+                        <span class="tag">バックカメラ</span>
+                    </div>
+                </div>
+                
+                <a href="#" class="detail-button">詳細はこちら</a>
+            </div>
+            
+            <!-- 車両3 - セレナ -->
+            <div class="car-card">
+                <div class="car-title">セレナ ライダー S-ハイブリッド</div>
+                <div class="car-color">ダイヤモンドブラック（P）</div>
+                <div class="car-image">
+                    <img src="https://img.nextage.jp/stock_images/4486036/4486036_mdl_1d3803cb.jpg" alt="セレナ ライダー S-ハイブリッド">
+                </div>
+                
+                <div class="section-title">基本情報</div>
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-label">支払総額:</div>
+                        <div class="info-value price">69.9万円</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">車両価格:</div>
+                        <div class="info-value">60.3万円</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">年式:</div>
+                        <div class="info-value">2015年（H27）</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">走行距離:</div>
+                        <div class="info-value">8.4万Km</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">車検:</div>
+                        <div class="info-value">2026年04月</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">修復歴:</div>
+                        <div class="info-value">無し</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">取扱店舗:</div>
+                        <div class="info-value">名取店</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">ローン情報（金利6%）</div>
+                <div class="loan-section">
+                    <div class="loan-row">
+                        <div class="loan-label">月々の支払額:</div>
+                        <div class="loan-value monthly-payment">13,514円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">支払総額:</div>
+                        <div class="loan-value">810,818円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">総支払利息:</div>
+                        <div class="loan-value total-interest">111,818円</div>
+                    </div>
+                    <div class="loan-row">
+                        <div class="loan-label">支払回数:</div>
+                        <div class="loan-value">60回（5年間）</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">仕様</div>
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-label">排気量:</div>
+                        <div class="info-value">2000cc</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">燃料:</div>
+                        <div class="info-value">ハイブリッド（ガソリン）</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">シフト:</div>
+                        <div class="info-value">CVT</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">駆動方式:</div>
+                        <div class="info-value">FF</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">主要装備</div>
+                <div class="info-section">
+                    <div class="tags">
+                        <span class="tag">両側電動スライドドア</span>
+                        <span class="tag">衝突被害軽減システム</span>
+                        <span class="tag">純正ナビ</span>
+                        <span class="tag">全周囲カメラ</span>
+                        <span class="tag">Bluetooth</span>
+                        <span class="tag">ETC</span>
+                        <span class="tag">クルーズコントロール</span>
+                        <span class="tag">ハイブリッド</span>
+                    </div>
+                </div>
+                
+                <a href="#" class="detail-button">詳細はこちら</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
